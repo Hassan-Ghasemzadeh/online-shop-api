@@ -3,30 +3,39 @@
 namespace App\Repositories;
 
 use App\Models\Product;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EloquentProductRepository implements ProductRepositoryInterface
 {
-    public function all(array $filters = [])
+    public function paginate(int $perpage, array $filters = []): LengthAwarePaginator
     {
-        return Product::query()->get();
+        $query = Product::query();
+        if (!empty($filters['category_id'])) {
+            $query->where('category_id', $filters['category_id']);
+        }
+        if (isset($filters['is_active'])) {
+            $query->where('is_active', (bool) $filters['is_active']);
+        }
+        if (!empty($filters['search'])) {
+            $query->where('name','like',"%{$filters['search']}%");
+        }
+        return $query->paginate($perpage);
     }
-    public function find(int $id)
+    public function find(int $id): ?Product
     {
-        return Product::findorFail($id);
+        return Product::find($id);
     }
-    public function create(array $data)
+    public function create(array $data): Product
     {
         return Product::create($data);
     }
-    public function update(int $id, array $data)
+    public function update(Product $product, array $data): Product
     {
-        $product = $this->find($id);
         $product->update($data);
-        return $product;
+        return $product->refresh();
     }
-    public function delete(int $id): bool
+    public function delete(Product $product): bool
     {
-        $product = $this->find($id);
         return $product->delete();
     }
 }
