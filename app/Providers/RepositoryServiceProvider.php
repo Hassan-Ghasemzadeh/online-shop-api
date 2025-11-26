@@ -11,7 +11,10 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        //repository binding
         $this->app->bind(\App\Repositories\ProductRepositoryInterface::class, \App\Repositories\EloquentProductRepository::class);
+        //service binding
+        $this->app->bind(\App\Services\Contracts\ProductServiceInterface::class, \App\Services\ProductService::class);
     }
 
     /**
