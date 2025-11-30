@@ -18,13 +18,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('auth/register', [AuthController::class, 'register']);
-Route::post('auth/login', [AuthController::class, 'login']);
+Route::prefix('v1')->group(function () {
+    Route::post('auth/register', [AuthController::class, 'register']);
+    Route::post('auth/login', [AuthController::class, 'login']);
 
-Route::middleware(['auth:api'])->group(function () {
-    Route::apiResource('products', ProductController::class);
-    Route::apiResource('categories', CategoryController::class)->except('create', 'edit');
-    Route::post('orders',[OrderController::class,'store']);
-    Route::get('orders/{id}',[OrderController::class,'show']);
-    Route::post('payments/{order}',[PaymentController::class,'pay']);
+    Route::middleware(['auth:api'])->group(function () {
+        Route::apiResource('products', ProductController::class);
+        Route::apiResource('categories', CategoryController::class)->except('create', 'edit');
+        Route::post('orders', [OrderController::class, 'store']);
+        Route::get('orders/{id}', [OrderController::class, 'show']);
+        Route::post('payments/{order}', [PaymentController::class, 'pay']);
+    });
 });
