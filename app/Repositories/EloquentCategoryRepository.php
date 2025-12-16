@@ -12,6 +12,6 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
     }
     public function create(array $data)
     {
-        throw new \Exception('Not implemented');
+        return Category::create($data);
     }
 }
