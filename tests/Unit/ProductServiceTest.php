@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Product;
-use app\Repositories\ProductRepositoryInterface;
+use App\Repositories\Contracts\ProductRepositoryInterface as ContractsProductRepositoryInterface;
 use App\Services\ProductService;
 use Mockery;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +15,7 @@ class ProductServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repo = Mockery::mock(ProductRepositoryInterface::class);
+        $this->repo = Mockery::mock(ContractsProductRepositoryInterface::class);
         $this->service = new ProductService($this->repo);
     }
 

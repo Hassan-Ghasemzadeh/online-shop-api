@@ -11,6 +11,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ProductApiTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic feature test example.
      */
@@ -24,7 +25,7 @@ class ProductApiTest extends TestCase
                 'Authorization' => "Bearer {$token}",
                 'Accept' => 'application/json'
             ]
-        )->postJson('/api/products', [
+        )->postJson('/api/v1/products', [
             'category_id' => $category->id,
             'name' => 'New product',
             'price' => 99.9

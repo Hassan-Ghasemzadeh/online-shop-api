@@ -24,9 +24,6 @@ Route::prefix('v1')->group(function () {
         Route::get('orders/{id}', [OrderController::class, 'show']);
         Route::post('payments/{order}', [PaymentController::class, 'pay']);
 
-        Route::get('/categories',      [CategoryController::class, 'index']);
-        Route::post('/categories',     [CategoryController::class, 'store']);
-
         Route::post('/checkout',       [PaymentController::class, 'checkout']);
     });
 });

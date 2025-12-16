@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Product;
+use App\Repositories\Contracts\ProductRepositoryInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class EloquentProductRepository implements ProductRepositoryInterface

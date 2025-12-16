@@ -4,15 +4,15 @@ namespace App\Services;
 
 use App\Services\Contracts\ProductServiceInterface;
 use App\Models\Product;
-use app\Repositories\ProductRepositoryInterface;
+use App\Repositories\Contracts\ProductRepositoryInterface as ContractsProductRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductService implements ProductServiceInterface
 {
-    protected ProductRepositoryInterface $productRepo;
+    protected ContractsProductRepositoryInterface $productRepo;
 
-    public function __construct(ProductRepositoryInterface $productRepo)
+    public function __construct(ContractsProductRepositoryInterface $productRepo)
     {
         $this->productRepo = $productRepo;
     }
