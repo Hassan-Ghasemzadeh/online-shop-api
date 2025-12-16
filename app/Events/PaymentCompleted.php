@@ -15,11 +15,10 @@ class PaymentCompleted implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $order;
     /**
      * Create a new event instance.
      */
-    public function __construct(Order $order)
+    public function __construct(public readonly array $order)
     {
         $this->order = $order;
     }
@@ -32,7 +31,7 @@ class PaymentCompleted implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('user.' . $this->order->user_id),
+            new PrivateChannel('user.' . $this->order['user_id']),
         ];
     }
 

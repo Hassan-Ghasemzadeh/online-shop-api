@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Events\PaymentCompleted;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Stripe\PaymentIntent;
 use Stripe\Stripe;
@@ -44,5 +46,21 @@ class PaymentController extends Controller
             Db::rollBack();
             return $this->error($e->getMessage());
         }
+    }
+     public function checkout(Request $request)
+    { 
+        $paymentData = [
+            'amount' => $request->amount,
+            'user_id' => Auth::user()->id,
+            'status' => 'success'
+        ];
+
+        event(new PaymentCompleted($paymentData));
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Payment completed successfully',
+            'data' => $paymentData
+        ], 200);
     }
 }
