@@ -15,6 +15,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\ProductRepositoryInterface::class, \App\Repositories\EloquentProductRepository::class);
         //service binding
         $this->app->bind(\App\Services\Contracts\ProductServiceInterface::class, \App\Services\ProductService::class);
+        //category repository binding
+        $this->app->bind(\App\Repositories\CategoryRepositoryInterface::class,\App\Repositories\EloquentCategoryRepository::class);
+        
     }
 
     /**
