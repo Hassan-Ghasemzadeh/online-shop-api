@@ -47,8 +47,8 @@ class PaymentController extends Controller
             return $this->error($e->getMessage());
         }
     }
-     public function checkout(Request $request)
-    { 
+    public function checkout(Request $request)
+    {
         $paymentData = [
             'amount' => $request->amount,
             'user_id' => Auth::user()->id,
@@ -57,10 +57,6 @@ class PaymentController extends Controller
 
         event(new PaymentCompleted($paymentData));
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Payment completed successfully',
-            'data' => $paymentData
-        ], 200);
+        return $this->success($paymentData, "Payment completed successfully");
     }
 }
