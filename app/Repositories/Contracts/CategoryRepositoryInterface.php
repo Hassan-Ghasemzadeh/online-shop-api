@@ -2,4 +2,8 @@
 
 namespace app\Repositories;
 
-interface CategoryRepositoryInterface {}
+interface CategoryRepositoryInterface
+{
+    public function all();
+    public function create(array $data);
+}
